@@ -47,16 +47,21 @@ namespace PlantService.Controllers
 
         [HttpPut]
         [Route("/[controller]/update")]
-        public IActionResult UpdateSensor(string json)
+        public IActionResult UpdateSensor(Sensor sensor)
         {
-            return new JsonResult(JsonConvert.DeserializeObject<Sensor>(json));
+            if (sensor.Id < 0 || sensor.Id > _sensors.Count)
+                return BadRequest();
+
+            _sensors.Remove(_sensors[sensor.Id]);
+            _sensors.Insert(sensor.Id, sensor);
+            return new JsonResult(_sensors);
         }
 
         [HttpPost]
         [Route("/[controller]/register")]
-        public IActionResult RegisterSensor(string json)
+        public IActionResult RegisterSensor([FromBody] Sensor sensor)
         {
-            Sensor sensor = JsonConvert.DeserializeObject<Sensor>(json);
+           
             _sensors.Add(sensor);
             return new JsonResult(sensor);
         }
