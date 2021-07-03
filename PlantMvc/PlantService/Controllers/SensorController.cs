@@ -11,16 +11,15 @@ namespace PlantService.Controllers
     public class SensorController : ControllerBase
     {
         private readonly ILogger<SensorController> _logger;
-        private readonly SensorRepository _repository;
+        private readonly Repository<Sensor> _repository;
 
-        public SensorController(ILogger<SensorController> logger, SensorRepository repository)
+        public SensorController(ILogger<SensorController> logger, Repository<Sensor> repository)
         {
             _logger = logger;
             _repository = repository;
         }
 
-        [HttpPut]
-        [Route("/[controller]/update")]
+        [HttpPut("/update")]
         public IActionResult UpdateSensor(Sensor sensor)
         {
             _repository.Update(sensor);
@@ -36,8 +35,7 @@ namespace PlantService.Controllers
             return new JsonResult(sensor);
         }
 
-        [HttpDelete]
-        [Route("/[controller]/delete/{id}")]
+        [HttpDelete("/delete/{id}")]
         public IActionResult DeleteSensor(int id)
         {
             try
@@ -60,8 +58,7 @@ namespace PlantService.Controllers
             return new JsonResult(_repository.GetAll());
         }
 
-        [HttpGet]
-        [Route("/[controller]/{id}")]
+        [HttpGet("/{id}")]
         [Produces("application/json")]
         public IActionResult GetById(int id)
         {

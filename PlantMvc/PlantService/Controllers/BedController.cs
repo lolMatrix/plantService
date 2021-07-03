@@ -1,9 +1,9 @@
-﻿using Entities.Models;
+﻿using DataBase;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace PlantService.Controllers
 {
@@ -13,65 +13,27 @@ namespace PlantService.Controllers
     {
         private readonly ILogger<BedController> _logger;
 
-        private List<GardenBed> _beds = new List<GardenBed>()
-        {
-            new GardenBed()
-            {
-                Name = "1",
-                WaterValuem = 10,
-                Sensors = new List<Sensor>
-                {
-                    new Sensor()
-                    {
-                        Name = "thirst",
-                        Type = Entities.Enums.SensorType.TemperatureSensor,
-                        SensorData = 10
-                    },
-                    new Sensor()
-                    {
-                        Name = "second",
-                        Type = Entities.Enums.SensorType.TemperatureSensor,
-                        SensorData = 20
-                    },
-                    new Sensor()
-                    {
-                        Name = "therd",
-                        Type = Entities.Enums.SensorType.TemperatureSensor,
-                        SensorData = 30
-                    }
-                }
-            },
-            new GardenBed(){Name = "2", WaterValuem = 20},
-            new GardenBed(){Name = "3", WaterValuem = 30}
-        };
+        private readonly Repository<GardenBed> _repository;
 
-        public BedController(ILogger<BedController> logger)
+        public BedController(ILogger<BedController> logger, Repository<GardenBed> repository)
         {
             _logger = logger;
+            _repository = repository;
         }
 
-        [HttpGet]
-        [Route("/[controller]")]
+        [HttpGet("/")]
         public IActionResult Index()
         {
-            return new JsonResult(_beds);
+            return new JsonResult(_repository.GetAll());
         }
 
-        [HttpGet]
-        [Route("/[controller]/{id}")]
+        [HttpGet("/{id}")]
         public IActionResult Details(int id)
         {
-            if(id < 0 || id > _beds.Count)
-            {
-                _logger.LogError("Грядка с id {id} не найдена", id);
-                return NotFound($"Грядка с id {id} не найдена");
-            }
-
-            return new JsonResult(_beds[id]);
+            return new JsonResult(_repository.GetById(id));
         }
 
-        [HttpPost]
-        [Route("/[controller]/register")]
+        [HttpPost("/register")]
         public ActionResult Create(string json)
         {
             GardenBed bed;
@@ -86,13 +48,12 @@ namespace PlantService.Controllers
                 return BadRequest();
             }
 
-            _beds.Add(bed);
-            return new JsonResult(bed);
+            var created = _repository.Save(bed);
+            return new JsonResult(created);
         }
 
 
-        [HttpPut]
-        [Route("/[controller]/edit")]
+        [HttpPut("/update")]
         public IActionResult Edit(string json)
         {
             GardenBed bed;
@@ -107,30 +68,15 @@ namespace PlantService.Controllers
                 return BadRequest();
             }
 
-            if (bed.Id < 0 || bed.Id > _beds.Count)
-            {
-                _logger.LogError("Грядка с id {id} не найдена", bed.Id);
-                return NotFound($"Грядка с id {bed.Id} не найдена");
-            }
-
-            _beds.Remove(_beds[bed.Id]);
-            _beds.Insert(bed.Id, bed);
+            bed = _repository.Update(bed);
 
             return new JsonResult(bed);
         }
 
-        [HttpDelete]
-        [Route("/[controller]/delete")]
+        [HttpDelete("/delete/{id}")]
         public ActionResult Delete(int id)
         {
-            if(id < 0 || id > _beds.Count)
-            {
-                _logger.LogError("Грядка с id {id} не найдена", id);
-                return NotFound($"Грядка с id {id} не найдена");
-            }
-
-            _beds.Remove(_beds[id]);
-
+            _repository.Delete(_repository.GetById(id));
             return Ok();
         }
 

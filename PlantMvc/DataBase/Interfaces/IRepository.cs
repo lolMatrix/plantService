@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataBase.Interfaces
 {
-    interface IReposytory<T> : IModelContext<T>
+    interface IRepository<T> : IModelContext<T>
         where T : Model
     {
         T[] GetAll();

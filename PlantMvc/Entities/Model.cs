@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities
 {
@@ -15,11 +11,10 @@ namespace Entities
             Type t = model.GetType();
 
             var props = t.GetProperties();
-            var myProps = t.GetProperties();
 
             for (int i = 0; i < props.Length; i++)
             {
-                myProps[i].SetValue(this, props[i].GetValue(model));
+                props[i].SetValue(this, props[i].GetValue(model));
             }
         }
     }

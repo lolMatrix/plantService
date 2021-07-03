@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataBase
 {
-    internal interface IModelContext<T> where T : Model
+    interface IModelContext<T> where T : Model
     {
         T Save(T model);
 
