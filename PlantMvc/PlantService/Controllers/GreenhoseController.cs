@@ -35,18 +35,15 @@ namespace PlantService.Controllers
         }
 
         [HttpPost("/create")]
-        public IActionResult Post(string json)
+        public IActionResult Post([FromBody] Greenhose greenhose)
         {
-            Greenhose greenhose = JsonConvert.DeserializeObject<Greenhose>(json);
             greenhose = _repository.Save(greenhose);
             return new JsonResult(greenhose);
         }
 
         [HttpPut("/update")]
-        public IActionResult Update(string json)
+        public IActionResult Update([FromBody] Greenhose greenhose)
         {
-            Greenhose greenhose = JsonConvert.DeserializeObject<Greenhose>(json);
-
             greenhose = _repository.Update(greenhose);
 
             return new JsonResult(greenhose);

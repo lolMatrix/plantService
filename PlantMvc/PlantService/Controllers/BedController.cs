@@ -2,8 +2,6 @@
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System;
 
 namespace PlantService.Controllers
 {
@@ -34,40 +32,16 @@ namespace PlantService.Controllers
         }
 
         [HttpPost("/register")]
-        public ActionResult Create(string json)
+        public ActionResult Create([FromBody] GardenBed bed)
         {
-            GardenBed bed;
-
-            try
-            {
-                bed = JsonConvert.DeserializeObject<GardenBed>(json);
-            }
-            catch(Exception e)
-            {
-                _logger.LogError("Ошибка преобразования: {message}", e.Message);
-                return BadRequest();
-            }
-
             var created = _repository.Save(bed);
             return new JsonResult(created);
         }
 
 
         [HttpPut("/update")]
-        public IActionResult Edit(string json)
+        public IActionResult Edit([FromBody] GardenBed bed)
         {
-            GardenBed bed;
-
-            try
-            {
-                bed = JsonConvert.DeserializeObject<GardenBed>(json);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Ошибка преобразования: {message}", e.Message);
-                return BadRequest();
-            }
-
             bed = _repository.Update(bed);
 
             return new JsonResult(bed);

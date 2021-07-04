@@ -1,4 +1,5 @@
 ﻿using Entities.Enums;
+using System.Collections.Generic;
 
 namespace Entities.Models
 {
@@ -9,7 +10,7 @@ namespace Entities.Models
 
         public SensorType Type { get; set; }
 
-        public decimal SensorData { get; set; }
+        public List<Data> SensorData { get; set; }
 
         public GardenBed Bed { get; set; }
     }
