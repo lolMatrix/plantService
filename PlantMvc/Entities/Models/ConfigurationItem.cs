@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Entities.Models
 {
-    public class ConfigurationItem
+    public class ConfigurationItem : Model
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
         
         public string Value { get; set; }
