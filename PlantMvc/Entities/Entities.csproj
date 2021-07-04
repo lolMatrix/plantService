@@ -46,6 +46,7 @@
     <Compile Include="Enums\SensorType.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Models\ConfigurationItem.cs" />
+    <Compile Include="Models\Data.cs" />
     <Compile Include="Models\GardenBed.cs" />
     <Compile Include="Models\Greenhose.cs" />
     <Compile Include="Models\Sensor.cs" />
