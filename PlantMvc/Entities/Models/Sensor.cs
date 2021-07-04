@@ -1,17 +1,16 @@
 ﻿using Entities.Enums;
+using System.Collections.Generic;
 
 namespace Entities.Models
 {
     
-    public class Sensor
+    public class Sensor : Model
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public SensorType Type { get; set; }
 
-        public decimal SensorData { get; set; }
+        public List<Data> SensorData { get; set; }
 
         public GardenBed Bed { get; set; }
     }
