@@ -2,9 +2,9 @@
 using DataBase;
 using Entities.Models;
 
-namespace PlantService
+namespace StatisticAndSolutions
 {
-    public class Instruments
+    public class sensors
     {
         public string name;
         public int value;
