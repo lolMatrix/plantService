@@ -21,12 +21,27 @@ namespace PlantService
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                              builder =>
+                              {
+                                  builder
+                                    .AllowAnyMethod()
+                                    .AllowAnyOrigin()
+                                    .AllowAnyHeader();
+                              });
+            });
+            services.AddRouting();
             services.AddControllers();
+            services.AddMvcCore();
             services.AddScoped(typeof(Context<>));
             services.AddScoped(typeof(Repository<>));
         }
@@ -39,9 +54,13 @@ namespace PlantService
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            
 
             app.UseAuthorization();
 
