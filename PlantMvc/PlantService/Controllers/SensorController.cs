@@ -19,7 +19,7 @@ namespace PlantService.Controllers
             _repository = repository;
         }
 
-        [HttpPut("/update")]
+        [HttpPut("update")]
         public IActionResult UpdateSensor(Sensor sensor)
         {
             _repository.Update(sensor);
@@ -27,15 +27,14 @@ namespace PlantService.Controllers
             return new JsonResult(_repository.GetAll());
         }
 
-        [HttpPost]
-        [Route("/[controller]/register")]
+        [HttpPost("register")]
         public IActionResult RegisterSensor([FromBody] Sensor sensor)
         {
             sensor = _repository.Save(sensor);
             return new JsonResult(sensor);
         }
 
-        [HttpDelete("/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public IActionResult DeleteSensor(int id)
         {
             try
@@ -52,14 +51,12 @@ namespace PlantService.Controllers
         }
 
         [HttpGet]
-        [Produces("application/json")]
         public IActionResult Get()
         {
             return new JsonResult(_repository.GetAll());
         }
 
-        [HttpGet("/{id}")]
-        [Produces("application/json")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             return new JsonResult(_repository.GetById(id));
