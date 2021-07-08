@@ -8,8 +8,8 @@ using Newtonsoft.Json;
 
 namespace PlantService.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class GreenhoseController : ControllerBase
     {
         private readonly ILogger<GreenhoseController> _logger;
@@ -21,27 +21,26 @@ namespace PlantService.Controllers
             _repository = repository;
         }
 
-
         [HttpGet]
         public IActionResult Get()
         {
             return new JsonResult(_repository.GetAll());
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             return new JsonResult(_repository.GetById(id));
         }
 
-        [HttpPost("/create")]
+        [HttpPost("create")]
         public IActionResult Post([FromBody] Greenhose greenhose)
         {
             greenhose = _repository.Save(greenhose);
             return new JsonResult(greenhose);
         }
 
-        [HttpPut("/update")]
+        [HttpPut("update")]
         public IActionResult Update([FromBody] Greenhose greenhose)
         {
             greenhose = _repository.Update(greenhose);
@@ -49,7 +48,7 @@ namespace PlantService.Controllers
             return new JsonResult(greenhose);
         }
 
-        [HttpDelete("/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
             _repository.Delete(_repository.GetById(id));

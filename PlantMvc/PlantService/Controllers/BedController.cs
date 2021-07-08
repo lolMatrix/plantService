@@ -19,19 +19,19 @@ namespace PlantService.Controllers
             _repository = repository;
         }
 
-        [HttpGet("/")]
+        [HttpGet]
         public IActionResult Index()
         {
             return new JsonResult(_repository.GetAll());
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public IActionResult Details(int id)
         {
             return new JsonResult(_repository.GetById(id));
         }
 
-        [HttpPost("/register")]
+        [HttpPost("register")]
         public ActionResult Create([FromBody] GardenBed bed)
         {
             var created = _repository.Save(bed);
@@ -39,7 +39,7 @@ namespace PlantService.Controllers
         }
 
 
-        [HttpPut("/update")]
+        [HttpPut("update")]
         public IActionResult Edit([FromBody] GardenBed bed)
         {
             bed = _repository.Update(bed);
@@ -47,7 +47,7 @@ namespace PlantService.Controllers
             return new JsonResult(bed);
         }
 
-        [HttpDelete("/delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public ActionResult Delete(int id)
         {
             _repository.Delete(_repository.GetById(id));
