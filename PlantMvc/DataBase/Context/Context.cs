@@ -1,29 +1,18 @@
 ﻿using Entities;
+using Entities.Models;
 using System.Data.Entity;
 
 namespace DataBase
 {
-    public class Context<T> : DbContext, IModelContext<T> 
-        where T : Model
+    public class Context : DbContext
     {
-        public DbSet<T> Sensors { get; set; }
+        public DbSet<Sensor> Sensors { get; set; }
+        public DbSet<Greenhose> Greenhoses { get; set; }
+        public DbSet<GardenBed> GardenBeds { get; set; }
+        public DbSet<ConfigurationItem> ConfigurationItems { get; set; }
 
-        public Context() : base()
+        public Context() : base("Server=(localdb)\\mssqllocaldb;Database=PlantDB;Trusted_Connection=True;")
         {
-
-        }
-
-        public T Save(T model)
-        {
-            model = Sensors.Add(model);
-            SaveChanges();
-            return model;
-        }
-
-        public void Delete(T model)
-        {
-            Sensors.Remove(model);
-            SaveChanges();
         }
     }
 }

@@ -38,12 +38,10 @@ namespace PlantService.Controllers
             return new JsonResult(sensorData);
         }
 
-        [HttpPost("/register/{id}")]
-        public IActionResult RegisterData(int id, [FromBody] Data data)
+        [HttpPost("/register")]
+        public IActionResult RegisterData([FromBody] Data data)
         {
-            var sensor = _sensors.GetById(id);
-            sensor.SensorData.Add(data);
-            _sensors.Update(sensor);
+            data = _repository.Save(data);
             return new JsonResult(data);
         }
     }
