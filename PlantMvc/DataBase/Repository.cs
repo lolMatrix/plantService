@@ -1,6 +1,9 @@
 ﻿using DataBase.Interfaces;
 using Entities;
 using System;
+using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 
 namespace DataBase
@@ -11,11 +14,14 @@ namespace DataBase
     /// <typeparam name="T">Модель, описывающие данные.</typeparam>
     public class Repository<T> : IRepository<T> where T : Model
     {
-        private readonly Context<T> _context;
+        private readonly Context _context;
 
-        public Repository(Context<T> context)
+        private DbSet<T> _set;
+
+        public Repository(Context context)
         {
             _context = context;
+            _set = _context.Set<T>();
         }
 
         /// <summary>
@@ -24,12 +30,13 @@ namespace DataBase
         /// <param name="model">Данные, которые нужно удалить</param>
         public void Delete(T model)
         {
-            _context.Delete(model);
+            _set.Remove(model);
+            _context.SaveChanges();
         }
 
         public T[] Select(Func<T, bool> expresion)
         {
-            return _context.Sensors.Where(expresion).ToArray();
+            return _set.AsNoTracking().Where(expresion).ToArray();
         }
 
         /// <summary>
@@ -38,7 +45,7 @@ namespace DataBase
         /// <returns>Все записи в бд типа Т</returns>
         public T[] GetAll()
         {
-            return _context.Sensors.ToArray();
+            return _set.AsNoTracking().ToArray();
         }
 
         /// <summary>
@@ -48,7 +55,7 @@ namespace DataBase
         /// <returns>Данные с нужным id</returns>
         public T GetById(int id)
         {
-            return _context.Sensors.FirstOrDefault(x => x.Id == id);
+            return _set.Find(id);
         }
 
         /// <summary>
@@ -58,7 +65,9 @@ namespace DataBase
         /// <returns>Сохраненную сущность с id</returns>
         public T Save(T model)
         {
-            return _context.Save(model);
+            _set.Add(model);
+            _context.SaveChanges();
+            return model;
         }
 
         /// <summary>
@@ -68,15 +77,11 @@ namespace DataBase
         /// <returns>Обновленные данные</returns>
         public T Update(T model)
         {
-            var sensor = GetById(model.Id);
+            _context.Entry(model).State = EntityState.Modified;
 
-            if (sensor == null)
-                return null;
-
-            sensor.UpdateModel(model);
             _context.SaveChanges();
 
-            return sensor;
+            return model;
         }
     }
 }
