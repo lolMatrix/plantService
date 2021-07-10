@@ -10,6 +10,7 @@ namespace Entities.Models
 
         public DateTime TimeMeasurement { get; set; }
 
-        public Sensor Sensor { get; set; }
+        public int SensorId { get; set; }
+        public virtual Sensor Sensor { get; set; }
     }
 }
