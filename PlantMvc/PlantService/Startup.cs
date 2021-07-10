@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,28 @@ namespace PlantService
             services.AddRouting();
             services.AddControllers();
             services.AddMvcCore();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "PlanService API",
+                    Description = "Сервис для сбора данных с теплиц",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Драчев Алексей, Иван Плотников, Михаил Моргунов",
+                        Url = new Uri("https://github.com/lolMatrix/plantService"),
+                        Email = String.Empty
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Use under GNU GPL V3",
+                        Url = new Uri("https://antirao.ru/gpltrans/gplru.pdf"),
+                    }
+                });
+            });
+
             services.AddSingleton<Context>();
             services.AddSingleton(typeof(Repository<>));
         }
@@ -60,7 +83,15 @@ namespace PlantService
 
             app.UseRouting();
 
-            
+            app.UseSwagger(c =>
+            {
+                c.SerializeAsV2 = true;
+            });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "PlanService V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseAuthorization();
 
