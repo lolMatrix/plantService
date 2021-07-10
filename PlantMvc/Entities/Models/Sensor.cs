@@ -10,8 +10,7 @@ namespace Entities.Models
 
         public SensorType Type { get; set; }
 
-        public List<Data> SensorData { get; set; }
-
-        public GardenBed Bed { get; set; }
+        public int BedId { get; set; }
+        public virtual GardenBed Bed { get; set; }
     }
 }
