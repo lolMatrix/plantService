@@ -11,6 +11,8 @@ namespace DataBase
         public DbSet<GardenBed> GardenBeds { get; set; }
         public DbSet<ConfigurationItem> ConfigurationItems { get; set; }
 
+        public DbSet<Data> Datas { get; set; }
+
         public Context() : base("Server=(localdb)\\mssqllocaldb;Database=PlantDB;Trusted_Connection=True;")
         {
         }

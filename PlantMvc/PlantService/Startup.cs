@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Reflection;
 using System.IO;
+using StatisticAndSolutions;
 
 namespace PlantService
 {
@@ -64,6 +65,7 @@ namespace PlantService
 
             services.AddSingleton<Context>();
             services.AddSingleton(typeof(Repository<>));
+            services.AddTransient<StatisticHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -16,7 +16,7 @@ namespace StatisticAndSolutions
 
         public Data[] GetDataFromSensorForPeriodById(DateTime first, DateTime second, int id)
         {
-            var data = _repository.Select(x => (x.Sensor.Id == id) && (x.TimeMeasurement < second && x.TimeMeasurement > first));
+            var data = _repository.Select(x => x.SensorId == id && x.TimeMeasurement < second && x.TimeMeasurement > first);
             return data.ToArray();
         }
 
