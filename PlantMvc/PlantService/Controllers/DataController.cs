@@ -2,6 +2,7 @@
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StatisticAndSolutions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,13 @@ namespace PlantService.Controllers
     {
         private readonly ILogger<DataController> _logger;
         private readonly Repository<Data> _repository;
-        private readonly Repository<Sensor> _sensors;
+        private readonly StatisticHandler _statistic;
 
-        public DataController(ILogger<DataController> logger, Repository<Data> repository, Repository<Sensor> sensors)
+        public DataController(ILogger<DataController> logger, Repository<Data> repository, StatisticHandler statistic)
         {
             _logger = logger;
             _repository = repository;
-            _sensors = sensors;
+            _statistic = statistic;
         }
 
         /// <summary>
@@ -60,6 +61,17 @@ namespace PlantService.Controllers
         public IActionResult RegisterData([FromBody] Data data)
         {
             data = _repository.Save(data);
+            return new JsonResult(data);
+        }
+
+        [HttpGet("get")]
+        public IActionResult GetDataForPeriod(int sensorId, DateTime first, DateTime second)
+        {
+            var data = _statistic.GetDataFromSensorForPeriodById(first, second, sensorId);
+
+            if (data?.Length == 0)
+                return NotFound();
+
             return new JsonResult(data);
         }
     }
