@@ -19,18 +19,38 @@ namespace PlantService.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Возврщает все записи грядок
+        /// </summary>
+        /// <response code="200">Возращает массив записей грядок</response>
         [HttpGet]
         public IActionResult Index()
         {
             return new JsonResult(_repository.GetAll());
         }
 
+        /// <summary>
+        /// Находит грядку по id
+        /// </summary>
+        /// <param name="id">id грядки</param>
+        /// <response code="200">Возращает запись грядки</response>
+        /// <response code="404">Если теплица не найдена</response>
         [HttpGet("{id}")]
         public IActionResult Details(int id)
         {
-            return new JsonResult(_repository.GetById(id));
+            var model = _repository.GetById(id);
+
+            if (model != null)
+                return new JsonResult(model);
+
+            return NotFound();
         }
 
+        /// <summary>
+        /// Создает запись о грядке
+        /// </summary>
+        /// <param name="bed">Запись, которую необходимо создать</param>
+        /// <response code="200">Возращает созданную запись грядки</response>
         [HttpPost("register")]
         public ActionResult Create([FromBody] GardenBed bed)
         {
@@ -38,7 +58,11 @@ namespace PlantService.Controllers
             return new JsonResult(created);
         }
 
-
+        /// <summary>
+        /// Редактирует запись о грядке
+        /// </summary>
+        /// <param name="bed">Запись</param>
+        /// <response code="200">Возращает обновленную запись Грядки</response>
         [HttpPut("update")]
         public IActionResult Edit([FromBody] GardenBed bed)
         {
@@ -47,10 +71,21 @@ namespace PlantService.Controllers
             return new JsonResult(bed);
         }
 
+        /// <summary>
+        /// Удаляет грядку из базы данных
+        /// </summary>
+        /// <param name="id">id грядки</param>
+        /// <response code="200">Если грядка удалена</response>
+        /// <response code="404">Если грядка не найдена</response>
         [HttpDelete("delete/{id}")]
         public ActionResult Delete(int id)
         {
-            _repository.Delete(_repository.GetById(id));
+            var model = _repository.GetById(id);
+
+            if (model == null)
+                return NotFound();
+
+            _repository.Delete(model);
             return Ok();
         }
 

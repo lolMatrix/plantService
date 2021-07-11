@@ -19,6 +19,11 @@ namespace PlantService.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Обновляет сенсор 
+        /// </summary>
+        /// <param name="sensor">Сенсор, который необходимо обновить</param>
+        /// <response code="200">Возвращает обнавленный сенсор</response>
         [HttpPut("update")]
         public IActionResult UpdateSensor(Sensor sensor)
         {
@@ -27,6 +32,11 @@ namespace PlantService.Controllers
             return new JsonResult(_repository.GetAll());
         }
 
+        /// <summary>
+        /// Зарегистрировать сенсор в системе
+        /// </summary>
+        /// <param name="sensor">Сенсор, который необходимо зарегистрировать</param>
+        /// <response code="200">Возвращает созданный сенсор</response>
         [HttpPost("register")]
         public IActionResult RegisterSensor([FromBody] Sensor sensor)
         {
@@ -34,32 +44,50 @@ namespace PlantService.Controllers
             return new JsonResult(sensor);
         }
 
+        /// <summary>
+        /// Удаляет сенсор из базы данных
+        /// </summary>
+        /// <param name="id">id сенсора </param>
+        /// <response code="200">Если сенсор был удален</response>
+        /// <response code="404">Если сенсор не был найден</response>
         [HttpDelete("delete/{id}")]
         public IActionResult DeleteSensor(int id)
         {
-            try
-            {
-                _repository.Delete(_repository.GetById(id));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Не существует сенсора с таким id {id}", id);
-                return BadRequest(e.Message);
-            }
+            var model = _repository.GetById(id);
+
+            if (model == null)
+                return NotFound();
+
+            _repository.Delete(model);
 
             return Ok();
         }
 
+        /// <summary>
+        /// Получить все сенсоры
+        /// </summary>
+        /// <response code="200">Возвращает все сенсоры</response>
         [HttpGet]
         public IActionResult Get()
         {
             return new JsonResult(_repository.GetAll());
         }
 
+        /// <summary>
+        /// Получить сенсор по id
+        /// </summary>
+        /// <param name="id">id Сенсора</param>
+        /// <response code="200">Возвращает сенсор</response>
+        /// <response code="404">Если сенсор не найден</response>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            return new JsonResult(_repository.GetById(id));
+            var sensor = _repository.GetById(id);
+            
+            if (sensor != null)
+                return new JsonResult(sensor);
+
+            return NotFound();
         }
     }
 }
