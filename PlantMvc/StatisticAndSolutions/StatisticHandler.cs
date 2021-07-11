@@ -1,48 +1,24 @@
-﻿using System;
-using DataBase;
-using Entities.Enums;
-using System.Collections.Generic;
+﻿using DataBase;
 using Entities.Models;
+using System;
+using System.Linq;
 
-
-
-namespace StatisticAndSolutions 
+namespace StatisticAndSolutions
 {
-    public class Program
-    {
-      
-        private string Sens ;
-
-        SortedList<string, int[]> DataSave = new SortedList<string, int[]>();
-    }
     public class StatisticHandler
     {
-        
-        public void ReturnList(SortedList<string,int[]> DataSave)
+        private readonly Repository<Data> _repository;
+
+        public StatisticHandler(Repository<Data> repository)
         {
-            
+            _repository = repository;
         }
-        public Data[] GetDataFromTermoSensor(DateTime start, DateTime end)
+
+        public Data[] GetDataFromSensorForPeriodById(DateTime first, DateTime second, int id)
         {
-            Data[] data = new Data[1];
-            data[0].TimeMeasurement = start;
-            data[1].TimeMeasurement = end;
-            return data;
+            var data = _repository.Select(x => (x.Sensor.Id == id) && (x.TimeMeasurement < second && x.TimeMeasurement > first));
+            return data.ToArray();
         }
-        public Data[] GetDataFromAirSensor(DateTime start, DateTime end)
-        {
-            Data[] data = new Data[1];
-            data[0].TimeMeasurement = start;
-            data[1].TimeMeasurement = end;
-            return data;
-        }
-        public Data[] GetDataFromWaterSensor(DateTime start, DateTime end)
-        {
-            Data[] data = new Data[1];
-            data[0].TimeMeasurement = start;
-            data[1].TimeMeasurement = end;
-            return data;
-        }
+
     }
 }
-
