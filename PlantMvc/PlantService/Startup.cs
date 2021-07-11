@@ -42,8 +42,8 @@ namespace PlantService
             services.AddRouting();
             services.AddControllers();
             services.AddMvcCore();
-            services.AddScoped(typeof(Context<>));
-            services.AddScoped(typeof(Repository<>));
+            services.AddSingleton<Context>();
+            services.AddSingleton(typeof(Repository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

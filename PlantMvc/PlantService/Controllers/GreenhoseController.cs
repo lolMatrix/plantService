@@ -2,7 +2,6 @@
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -53,6 +52,6 @@ namespace PlantService.Controllers
         {
             _repository.Delete(_repository.GetById(id));
             return Ok();
-        }
+        } 
     }
 }
