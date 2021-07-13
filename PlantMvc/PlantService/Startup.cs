@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Reflection;
 using System.IO;
 using StatisticAndSolutions;
+using System.Text.Json.Serialization;
 
 namespace PlantService
 {
@@ -36,7 +36,12 @@ namespace PlantService
                               });
             });
             services.AddRouting();
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(c => 
+                {
+                    var enumConverter = new JsonStringEnumConverter();
+                    c.JsonSerializerOptions.Converters.Add(enumConverter);
+                });
             services.AddMvcCore();
 
             services.AddSwaggerGen(c =>

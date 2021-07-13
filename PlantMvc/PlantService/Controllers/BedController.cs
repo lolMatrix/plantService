@@ -30,6 +30,25 @@ namespace PlantService.Controllers
         }
 
         /// <summary>
+        /// Возвращает массив грядок по id теплицы 
+        /// </summary>
+        /// <param name="greenhoseId">id теплицы</param>
+        /// <response code="200">Возращает массив грядок</response>
+        /// <response code="404">Если грядки не найдены</response>
+        [HttpGet("get/{greenhoseId}")]
+        public IActionResult GetBedByGreenhoseId(int greenhoseId)
+        {
+            var beds = _repository.Select(x => x.GreenhoseId == greenhoseId);
+
+            if (beds?.Length == 0)
+            {
+                return NotFound();
+            }
+
+            return new JsonResult(beds);
+        }
+
+        /// <summary>
         /// Находит грядку по id
         /// </summary>
         /// <param name="id">id грядки</param>

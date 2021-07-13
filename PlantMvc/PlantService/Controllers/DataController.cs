@@ -72,8 +72,8 @@ namespace PlantService.Controllers
         /// То first будет  01.02.2020 00:00, а second 01.03.2020 00:00
         /// </remarks>
         /// <param name="sensorId">id сенсора, с которого берем данные</param>
-        /// <param name="first">Самая поздняя дата <example>2021-07-11T16:02:47.407</example></param>
-        /// <param name="second">Самая ранняя дата <example>2021-07-11T16:02:53.407</example></param>
+        /// <param name="first">Самая поздняя дата. Пример: 2021-07-11T16:02:47.407</param>
+        /// <param name="second">Самая ранняя дата. Пример: 2021-07-11T16:02:53.407</param>
         /// <response code="200">Возвращает массив данных с указанного датчика за указанный период</response>
         /// <response code="404">Если ничего не было найдено</response>
         [HttpGet("get")]

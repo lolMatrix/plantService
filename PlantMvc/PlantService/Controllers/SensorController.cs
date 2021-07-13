@@ -20,6 +20,25 @@ namespace PlantService.Controllers
         }
 
         /// <summary>
+        /// Возвращает массив сенсоров по id грядки
+        /// </summary>
+        /// <param name="bedId">id грядки</param>
+        /// <response code="200">Возвращает массив сенсоров</response>
+        /// <response code="404">Если ничего не найдено</response>
+        [HttpGet("get/{bedId}")]
+        public IActionResult GetSensorsByBedId(int bedId)
+        {
+            var sensors = _repository.Select(x => x.BedId == bedId);
+
+            if(sensors?.Length == 0)
+            {
+                return NotFound();
+            }
+
+            return new JsonResult(sensors);
+        }
+
+        /// <summary>
         /// Обновляет сенсор 
         /// </summary>
         /// <param name="sensor">Сенсор, который необходимо обновить</param>
