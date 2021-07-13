@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Models
 {
     public class ConfigurationItem : Model
     {
+        [Required]
         public string Name { get; set; }
         
+        [Required]
         public string Value { get; set; }
     }
 }
