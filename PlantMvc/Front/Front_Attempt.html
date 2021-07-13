@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Page Title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    
+}
+
+/* Style the header */
+.header {   
+    padding: 50px;
+    text-align: center;
+   color: white;
+   background-image: url(ivy-plant-3d-model-20.jpg);
+}
+
+/* Increase the font size of the h1 element */
+.header h1 {
+    font-size: 50px;
+}
+
+/* Style the top navigation bar */
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+/* Style the navigation bar links */
+.navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+/* Right-aligned link */
+.navbar a.right {
+    float: right;
+}
+
+/* Change color on hover */
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Column container */
+.row {  
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+
+
+/* Settings Toggle button 
+.toggle-button {
+ position: relative;
+ display: inline-block;
+ width: 100px;
+ height: 50px;
+ margin: 0;
+ vertical-align: top;
+ background: #ffffff;
+ border: 1px solid #bbc1e1;
+ border-radius: 30px;
+ outline: none;
+ cursor: pointer;
+ -webkit-appearance: none;
+ -moz-appearance: none;
+ appearance: none;
+}
+
+/* Settings Toggle button circle 
+.toggle-button::after {
+  content: "";
+
+  display: inline-block;
+  position: absolute;
+  left: 3px;
+  top: 1.5px;
+
+  width: 45px;
+  height: 45px;
+  background-color: blue;
+  border-radius: 50%;
+
+  transform: translateX(0);
+}
+
+/* Settings Toggle button animation
+
+.toggle-button:checked::after {
+  transform: translateX(calc(100% + 3px));
+  background-color: #fff;  
+}
+.toggle-button:checked {
+  background-color: blue;
+}
+
+ засунуть в ASS(то есть, в боди)
+<div class="container">
+    <input type="checkbox" id="toggle-button" class="toggle-button">
+    <label for="toggle-button" class="text">Settings</label>
+  </div> 
+
+*/
+/* Footer */
+.footer {
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+}
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+    .row {   
+        flex-direction: column;
+    }
+}
+
+
+
+
+
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+@media screen and (max-width: 400px) {
+    .navbar a {
+        float: none;
+        width:100%;
+    }
+}
+
+
+.rectangle {
+counter-reset: li; 
+list-style: none; 
+font: 14px "Trebuchet MS", "Lucida Sans";
+padding: 0;
+text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+.rectangle a {
+position: relative;
+display: block;
+padding: .4em .4em .4em .8em;
+margin: .5em 0 .5em 2.5em;
+background: #D3D4DA;
+color: #444;
+text-decoration: none;
+transition: all .3s ease-out;
+}
+.rectangle a:hover {background: #DCDDE1;}       
+.rectangle a:before {
+content: counter(li);
+counter-increment: li;
+position: absolute;
+left: -2.5em;
+top: 50%;
+margin-top: -1em;
+background: #9097A2;
+height: 2em;
+width: 2em;
+line-height: 2em;
+text-align: center;
+font-weight: bold;
+}
+.rectangle a:after {
+position: absolute;
+content: "";
+border: .5em solid transparent;
+left: -1em;
+top: 50%;
+margin-top: -.5em;
+transition: all .3s ease-out;
+}
+.rectangle a:hover:after {
+left: -.5em;
+border-left-color: #9097A2;
+}
+
+
+
+</style>
+<script src="https://www.google.com/jsapi"></script>
+<script>
+ google.load("visualization", "1", {packages:["corechart"]});
+ google.setOnLoadCallback(drawChart);
+ function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+   ['Месяц', 'Температура'],
+   ['Июль', 30],
+   ['Август', 28],
+   ['Сентябрь', 29]
+  ]);
+  var options = {
+   title: 'Температура в теплице',
+   hAxis: {title: 'Градусы'},
+   vAxis: {title: 'Месяц'}
+  };
+  var chart = new google.visualization.ColumnChart(document.getElementById('tempruche'));
+  chart.draw(data, options);
+ }
+</script>
+
+</style>
+<script src="https://www.google.com/jsapi"></script>
+<script>
+ google.load("visualization", "1", {packages:["corechart"]});
+ google.setOnLoadCallback(drawChart);
+ function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+   ['Месяц', 'Влажность'],
+   ['Июль', 60],
+   ['Август', 65],
+   ['Сентябрь', 67]
+  ]);
+  var options = {
+   title: 'Влажность в теплице',
+   hAxis: {title: 'Процент'},
+   vAxis: {title: 'Месяц'}
+  };
+  var chart = new google.visualization.ColumnChart(document.getElementById('vlaga'));
+  chart.draw(data, options);
+ }
+</script>
+
+</style>
+<script src="https://www.google.com/jsapi"></script>
+<script>
+ google.load("visualization", "1", {packages:["corechart"]});
+ google.setOnLoadCallback(drawChart);
+ function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+   ['Месяц', 'Температура'],
+   ['Июль', 30],
+   ['Август', 28],
+   ['Сентябрь', 29]
+  ]);
+  var options = {
+   title: 'Температура в теплице',
+   hAxis: {title: 'Градусы'},
+   vAxis: {title: 'Месяц'}
+  };
+  var chart = new google.visualization.ColumnChart(document.getElementById('chet'));
+  chart.draw(data, options);
+ }
+</script>
+
+
+</head>
+<body>
+
+
+
+<div class="header">
+  <h1>Plant Service</h1>
+<h3>A service to observe plants' conditions</h3>
+</div>
+
+
+  
+<div class="navbar">
+  <a href="https://vk.com/feed">Кнопка</a>
+  <a href="https://youtu.be/dQw4w9WgXcQ">Кнопка</a>
+  <a href="https://youtu.be/dQw4w9WgXcQ">Кнопка</a>
+  <a href="https://youtu.be/dQw4w9WgXcQ" class="right">Кнопка</a>
+</div>
+
+
+
+<table>
+    <tr>
+        <td>
+            <div contenteditable>ввввввввв
+            </div>
+</td>
+<td>
+    <div contenteditable>ввв
+
+    </div>
+</td>
+</tr>
+    <tr>
+        <td>Теплицы
+
+        </td>
+    </tr>
+</table>
+
+   
+    <ol class=rectangle>
+        <li><a href="file:///C:/Users/berfe/Downloads/Untitled-1.html" >Теплица</a></li>
+        <li><a href="file:///C:/Users/berfe/Downloads/Untitled-1.html">Теплица</a></li>
+        <li><a href="https://vk.com/feed">Теплица</a></li>
+        <li><a href="https://vk.com/feed">Теплица</a></li>
+        <li><a href="https://vk.com/feed">Теплица</a></li>
+        <li><a href="https://vk.com/feed">Теплица</a></li> 
+    </ol>
+
+    <ol class=rectangle>
+        <li><a href="file:///C:/Users/berfe/Downloads/Untitled-1.html" >Грядка</a></li>
+        <li><a href="file:///C:/Users/berfe/Downloads/Untitled-1.html" >Грядка</a></li>
+        <li><a href="file:///C:/Users/berfe/Downloads/Untitled-1.html" >Грядка</a></li>
+        <li><a href="file:///C:/Users/berfe/Downloads/Untitled-1.html" >Грядка</a></li>
+    </ol>
+    
+    <td>Название культуры:<div contenteditable>Кукуруза
+    </div></td>
+    
+    
+    <div id="tempruche" style="width: 600px; height: 400px;"></div>
+    <div id="vlaga" style="width: 700px; height: 400px;"></div>
+    <div id="chet" style="width: 800px; height: 400px;"></div>
+
+
+ 
+
+<div class="footer">
+    <h2>ммммм</h2>
+  </div>
+
+</body>
+</html>
+
+
