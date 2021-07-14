@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />
+<link type="text/css" rel="StyleSheet" href="https://bootstraptema.ru/plugins/2016/shieldui/style.css" />
+<script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
+<script src="https://bootstraptema.ru/plugins/2016/shieldui/script.js"></script>
+
+<br><br><br>
+
+<div class="container">
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+
+<!-- График --><div id="chart">
+
+<script>
+ $(document).ready(function () {
+ $("#chart").shieldChart({
+ theme: "light",
+ primaryHeader: {
+ text: "Средняя температура в теплице за месяц"
+ },
+ exportOptions: {
+ image: false,
+ print: false
+ },
+ axisX: {
+ categoricalValues: ["Недаля 1", "Неделя 2", "Неделя 3"]
+ },
+ tooltipSettings: {
+ chartBound: true,
+ axisMarkers: {
+ enabled: true,
+ mode: 'xy'
+ } 
+ },
+ dataSeries: [{
+ seriesType: 'line',
+ collectionAlias: "Температура в градусах Цельсия",
+ data: [35, 30, 26]
+ }]
+ });
+ });
+ </script><!-- /.График -->
+
+</div><!-- /.col-md-8 col-md-offset-2 -->
+</div><!-- /.row -->
+</div><!-- /.container -->
