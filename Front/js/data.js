@@ -29,10 +29,24 @@ function getList(url, id, lambda){
     
     list.forEach(element => {
         var array = lambda(element);
-        var html = $('<div>').load("htmlTemplates/data.html" + "graph.html", function(){
+        var html = $('<div>').load("htmlTemplates/data.html", function(){
             html.find(".title").text(array[0]);
             html.find(".content").text(array[1]);
             html.find(".card").attr("onclick", array[2]);
+        });
+        $("#content").append(html);
+    });
+}
+
+function getGraph(url, id, lambda){
+    var graph = getDataFromServer(url + id);
+    
+    list.forEach(element => {
+        var array = lambda(graph);
+        var html = $('<div>').load("graph.html", function(){
+            //html.find(".title").text(array[0]);
+           // html.find(".content").text(array[1]);
+           // html.find(".card").attr("onclick", array[2]);
         });
         $("#content").append(html);
     });
