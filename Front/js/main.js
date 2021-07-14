@@ -20,5 +20,22 @@ function getBedsList(id){
 
 function getSensorList(id){
     $("#content").empty();
-    getDetails("https://localhost:44359/bed/", id,);
+    getDetails("https://localhost:44359/bed/", id, function (data){
+        return [data.name, 'Кол-во воды в баке: ' + data.waterVolume + ' литров.'];
+    });
+    getList("https://localhost:44359/sensor/get/", id, function(data){
+        var type = "";
+        switch (data.type){
+            case "WaterSensor":
+                type = "Сенсор влажности почвы";
+                break;
+            case "AirSensor":
+                type = "Сенсор воздуха";
+                break;
+            case "TemperatureSensor":
+                type = "Сенсор температуры";
+                break;
+        }
+        return [data.name, type, 'getCharts(' + data.id + ')'];
+    })
 }
