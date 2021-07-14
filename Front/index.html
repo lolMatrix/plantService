@@ -45,7 +45,7 @@
                 crossDomain: true,
                 success: function (data){
                     data.forEach(element => {
-                        var html = $('<div>').load("data.html", function(){
+                        var html = $('<div>').load("htmlTemlplates/data.html", function(){
                             html.find(".title").text(element.name);
                             html.find(".content").text(element.location);
                             html.find(".card").attr("onclick", "fuck(" + element.id + ")");
@@ -63,7 +63,7 @@
                 crossDomain: true,
                 success: function (data){
                     data.forEach(element => {
-                        var html = $('<div>').load("data.html", function(){
+                        var html = $('<div>').load("htmlTemlplates/data.html", function(){
                             html.find(".title").text(element.name);
                             html.find(".content").text(element.waterVolume);
                             html.find(".card").attr("onclick", "fuck(" + element.id + ")");
