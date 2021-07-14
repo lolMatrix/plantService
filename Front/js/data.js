@@ -29,7 +29,7 @@ function getList(url, id, lambda){
     
     list.forEach(element => {
         var array = lambda(element);
-        var html = $('<div>').load("htmlTemplates/data.html", function(){
+        var html = $('<div>').load("htmlTemplates/data.html" + "graph.html", function(){
             html.find(".title").text(array[0]);
             html.find(".content").text(array[1]);
             html.find(".card").attr("onclick", array[2]);
@@ -37,3 +37,4 @@ function getList(url, id, lambda){
         $("#content").append(html);
     });
 }
+

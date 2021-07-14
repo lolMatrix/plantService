@@ -37,5 +37,6 @@ function getSensorList(id){
                 break;
         }
         return [data.name, type, 'getCharts(' + data.id + ')'];
-    })
+    });
+    
 }
