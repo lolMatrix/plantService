@@ -44,8 +44,8 @@ function getGraph(url, id, lambda){
     list.forEach(element => {
         var array = lambda(graph);
         var html = $('<div>').load("graph.html", function(){
-            //html.find(".title").text(array[0]);
-           // html.find(".content").text(array[1]);
+            html.find(".title").text(array[0]);
+            html.find(".content").text(array[1]);
            // html.find(".card").attr("onclick", array[2]);
         });
         $("#content").append(html);
