@@ -36,7 +36,7 @@ namespace DataBase
 
         public T[] Select(Func<T, bool> expresion)
         {
-            return _set.AsNoTracking().Where(expresion).ToArray();
+            return _set.Where(expresion).ToArray();
         }
 
         /// <summary>
