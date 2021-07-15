@@ -38,10 +38,4 @@ function getSensorList(id){
         }
         return [data.name, type, 'getCharts(' + data.id + ')'];
     });
-    getGraph("https://localhost:44359/Data/get",id, function(data){
-       // return [data.id]
-    })
-    
-    
-    
 }
