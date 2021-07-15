@@ -1,0 +1,65 @@
+
+    
+<link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />
+<link type="text/css" rel="StyleSheet" href="https://bootstraptema.ru/plugins/2016/shieldui/style.css" />
+<script src="https://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
+<script src="https://bootstraptema.ru/plugins/2016/shieldui/script.js"></script>
+    
+<script>
+ $(document).ready(function () {
+ $("#chart").shieldChart({
+ theme: "light",
+ primaryHeader: {
+ text: "Температура воздуха"
+ },
+ exportOptions: {
+ image: false,
+ print: false
+ },
+ axisX: {
+ categoricalValues: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
+ },
+ tooltipSettings: {
+ chartBound: true,
+ axisMarkers: {
+ enabled: true,
+ mode: 'xy'
+ } 
+ },
+ dataSeries: [{
+ seriesType: 'line',
+ collectionAlias: "Температура воздуха (в градусах по Цельсию)",
+ data: [16, 17, 15, 18, 14, 25, 22, 17, 23, 20, 19, 18]
+ }]
+ });
+ });
+ </script><!-- /.График -->
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+<!-- График --><div id="chart">
+                </div> 
+        </div>
+        </div>
+        
+    
+     
+   
+
+</div>
+
+
+
+
+
+  
+    
+   
+    
+    
+    
+
