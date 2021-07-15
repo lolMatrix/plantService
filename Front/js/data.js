@@ -68,9 +68,11 @@ function parseData(data){
             object.y = element.value;
             array.push(object);
     });
+    return array;
 }
 
 function drawChart(data){
+    var data = parseData(data);
     $("#chart").shieldChart({
             theme: "light",
             primaryHeader: {
@@ -94,7 +96,7 @@ function drawChart(data){
                     {
                             seriesType: 'line',
                             collectionAlias: "Температура воздуха (в градусах по Цельсию)",
-                            data: parseData(data)
+                            data: data 
                     }
             ]
     });
