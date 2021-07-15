@@ -33,6 +33,7 @@ function getDetails(url, id, lambda){
 
     var html = $('<div>').load("htmlTemplates/details.html", function (){
         var array = lambda(details);
+        $('title').text(details.name);
         html.find('#title').text(array[0]);
         html.find('#location').text(array[1]);
         $('#content').prepend(html);
@@ -64,9 +65,13 @@ function getDataForMounth(id){
     var second = new Date();
     url += '&second=' + second.toISOString();
     var data = getDataFromServer(url);
-    data.sort(function(a, b) {
-        Date.parse(a.timeMeasurement) - Date.parse(b.timeMeasurement);
-    });
+    if (typeof(data) != typeof(object))
+        data.sort(function(a, b) {
+            return Date.parse(a.timeMeasurement) - Date.parse(b.timeMeasurement);
+        });
+    else 
+        data = null;
+
     return data;
 }
 
