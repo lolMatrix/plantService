@@ -1,5 +1,6 @@
 ﻿using Entities.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Entities.Models
 {
@@ -14,6 +15,7 @@ namespace Entities.Models
 
         [Required]
         public int BedId { get; set; }
+        [JsonIgnore]
         public virtual GardenBed Bed { get; set; }
     }
 }
