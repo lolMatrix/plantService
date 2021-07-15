@@ -71,12 +71,12 @@ function parseData(data){
     return array;
 }
 
-function drawChart(data){
+function drawChart(data, title, alias){
     var data = parseData(data);
     $("#chart").shieldChart({
             theme: "light",
             primaryHeader: {
-            text: "Температура воздуха"
+            text: title
             },
             exportOptions: {
                     image: false,
@@ -95,7 +95,7 @@ function drawChart(data){
             dataSeries: [
                     {
                             seriesType: 'line',
-                            collectionAlias: "Температура воздуха (в градусах по Цельсию)",
+                            collectionAlias: alias,
                             data: data 
                     }
             ]
