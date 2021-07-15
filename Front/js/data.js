@@ -56,3 +56,47 @@ function getGraph(url, id, lambda){
     
 }
 
+function getDate(date) {
+    return Date.parse(date);
+}
+
+function parseData(data){
+    var array = [];
+    data.forEach(element => {
+            var object = new Object();
+            object.x = Date.parse(element.timeMeasurement);
+            object.y = element.value;
+            array.push(object);
+    });
+}
+
+function drawChart(data){
+    $("#chart").shieldChart({
+            theme: "light",
+            primaryHeader: {
+            text: "Температура воздуха"
+            },
+            exportOptions: {
+                    image: false,
+                    print: false
+            },
+            tooltipSettings: {
+                    chartBound: true,
+                    axisMarkers: {
+                            enabled: true,
+                            mode: 'xy'
+                    } 
+            },
+            axisX: {
+                    axisType: 'datetime'
+            },
+            dataSeries: [
+                    {
+                            seriesType: 'line',
+                            collectionAlias: "Температура воздуха (в градусах по Цельсию)",
+                            data: parseData(data)
+                    }
+            ]
+    });
+}       
+
