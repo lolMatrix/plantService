@@ -44,9 +44,9 @@ function getGraph(url, id, lambda){
     graph.forEach(element => {
         var array = lambda(element);
         var html = $('<div>').load("htmlTemplates/graph.html", function(){
-            html.find(".title").text(array[0]);
-            html.find(".content").text(array[1]);
-            html.find(".card").attr("onclick", array[2]);
+            //html.find(".title").text(array[0]);
+           // html.find(".content").text(array[1]);
+           // html.find(".card").attr("onclick", array[2]);
         });
         
         $("#content").append(html);
@@ -55,50 +55,4 @@ function getGraph(url, id, lambda){
    
     
 }
-
-function getDate(date) {
-    return Date.parse(date);
-}
-
-function parseData(data){
-    var array = [];
-    data.forEach(element => {
-            var object = new Object();
-            object.x = Date.parse(element.timeMeasurement);
-            object.y = element.value;
-            array.push(object);
-    });
-    return array;
-}
-
-function drawChart(data, title, alias){
-    var data = parseData(data);
-    $("#chart").shieldChart({
-            theme: "light",
-            primaryHeader: {
-            text: title
-            },
-            exportOptions: {
-                    image: false,
-                    print: false
-            },
-            tooltipSettings: {
-                    chartBound: true,
-                    axisMarkers: {
-                            enabled: true,
-                            mode: 'xy'
-                    } 
-            },
-            axisX: {
-                    axisType: 'datetime'
-            },
-            dataSeries: [
-                    {
-                            seriesType: 'line',
-                            collectionAlias: alias,
-                            data: data 
-                    }
-            ]
-    });
-}       
 
