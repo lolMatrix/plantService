@@ -1,12 +1,17 @@
-var greenhose = getDataFromServer("https://localhost:44359/greenhose");
-greenhose.forEach(element => {
-    var html = $('<div>').load("htmlTemplates/data.html", function(){
-        html.find(".title").text(element.name);
-        html.find(".content").text(element.location);
-        html.find(".card").attr("onclick", "getBedsList(" + element.id + ")");
-    });
+$(document).ready(function (){
+    getGreenhoseList();
+})
+function getGreenhoseList(){
+    var greenhose = getDataFromServer("https://localhost:44359/greenhose");
+    greenhose.forEach(element => {
+        var html = $('<div>').load("htmlTemplates/data.html", function(){
+            html.find(".title").text(element.name);
+            html.find(".content").text(element.location);
+            html.find(".card").attr("onclick", "getBedsList(" + element.id + ")");
+        });
     $("#content").append(html);
-});
+    });
+}
 
 function getBedsList(id){
     $("#content").empty();
