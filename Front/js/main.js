@@ -1,5 +1,15 @@
 $(document).ready(function (){
     getGreenhoseList();
+    $('#createGreenhose').submit(function(e){
+        var greenhose = new Object();
+        greenhose.name = $('#name').val();
+        greenhose.location = $('#location').val();
+
+        sendJson(greenhose, 'greenhose/create', function(){
+            getGreenhoseList();
+        })
+        return false;
+    })
 })
 function getGreenhoseList(){
     $('#content').empty();

@@ -6,6 +6,9 @@ function getDataFromServer(url) {
         async: false,
         crossDomain: true,
         success: function (dataFromServer){
+            if (typeof(data) != typeof(object))
+                dataFromServer.sort((a, b) => b.id - a.id);
+                
             data = dataFromServer
         }
     });
@@ -120,3 +123,15 @@ function drawChart(data, title, alias){
             ]
     });
 }       
+
+function sendJson(object, url, func){
+    $.ajax({
+        method: 'POST',
+        async: false,
+        data: JSON.stringify(object),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        url: getHost() + url,
+        success: func
+    })
+}
