@@ -4,6 +4,7 @@ $(document).ready(function (){
 function getGreenhoseList(){
     $('#content').empty();
     disableNavigation();
+    setHiddenAddButtonOnHeader(false);
     var greenhose = getDataFromServer("https://localhost:44359/greenhose");
     greenhose.forEach(element => {
         var html = $('<div>').load("htmlTemplates/data.html", function(){
@@ -16,6 +17,7 @@ function getGreenhoseList(){
 }
 
 function getBedsList(id){
+    setHiddenAddButtonOnHeader(true);
     enableNavigation('getGreenhoseList', '');
     $("#content").empty();
     getDetails("https://localhost:44359/greenhose/", id, function(data){
@@ -29,32 +31,74 @@ function getBedsList(id){
 function getSensorList(id){
     $("#content").empty();
     getDetails("https://localhost:44359/bed/", id, function (data){
-        enableNavigation('getBedsList', data.bedId);
+        enableNavigation('getBedsList', data.greenhoseId);
         return [data.name, 'Кол-во воды в баке: ' + data.waterVolume + ' литров.'];
     });
     getList("https://localhost:44359/sensor/get/", id, function(data){
-        var type = "";
-        switch (data.type){
-            case "WaterSensor":
-                type = "Сенсор влажности почвы";
-                break;
-            case "AirSensor":
-                type = "Сенсор воздуха";
-                break;
-            case "TemperatureSensor":
-                type = "Сенсор температуры";
-                break;
-        }
-        return [data.name, type, 'getCharts(' + data.id + ')'];
+        return [data.name, getType(data.type), 'getSensorDetails(' + data.id + ')'];
     });
+    showAddButton();
 }
 
 function enableNavigation(backFunction, id){
-    $('#navItem').removeClass('disabled');
+    $('#navItem').removeClass('hidden');
     $('#navItem').attr('onclick', backFunction + '(' + id + ')');
 }
 
 function disableNavigation() {
-    $('#navItem').addClass('disabled');
+    $('#navItem').addClass('hidden');
     $('#navItem').attr('onclick', '');
+}
+
+function setHiddenAddButtonOnHeader(isDisable){
+    if(isDisable)
+        $('#addOnHeader').addClass('hidden');
+    else
+        $('#addOnHeader').removeClass('hidden');
+}
+
+function getSensorDetails(id){
+    $('#content').empty();
+
+    var sensorType;
+
+    getDetails(getHost() + "sensor/", id, function(data){
+        enableNavigation("getSensorList", data.bedId);
+        sensorType = getType(data.type);
+        return [data.name, sensorType];
+    });
+
+    var data = getDataForMounth(id);
+
+    var html;
+    if (data != null){
+        html = $('<div>').load("htmlTemplates/graph.html", function(){
+            drawChart(data, sensorType, getMeseasurementUnit(data));
+        });
+    } else {
+        html = $('<div>').load("htmlTemplates/data.html", function(){
+            html.find(".title").text("Пока нет данных для этого датчика");
+            html.find(".content").text("Но, его можно настроить. Индентификатор датчика: " + id);
+        });
+    }
+
+    $("#content").append(html);
+
+    hideAddButton();
+}
+
+function getMeseasurementUnit(data){
+    var unit = '';
+    if (data.length > 0){
+        unit = data[0].meseasurementUnit;
+    }
+
+    return unit;
+}
+
+function hideAddButton(){
+    $('#add').addClass('hidden');
+}
+function showAddButton(){
+    $('#add').removeClass('hidden');
 }
