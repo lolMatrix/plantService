@@ -10,7 +10,41 @@ $(document).ready(function (){
         });
         return false;
     })
-})
+});
+
+function deleteGreenhose(id){
+    $.ajax({
+        method: 'DELETE',
+        url: getHost() + 'greenhose/delete/' + id,
+        success: function(){
+            getGreenhoseList();
+            showAlert()
+        }
+    })
+}
+
+function deleteBed(id, greengoseId){
+    $.ajax({
+        method: 'DELETE',
+        url: getHost() + 'bed/delete/' + id,
+        success: function(){
+            getBedsList(greengoseId);
+            showAlert();
+        }
+    })
+}
+
+function deleteSensor(id, bedId){
+    $.ajax({
+        method: 'DELETE',
+        url: getHost() + 'sensor/delete/' + id,
+        success: function(){
+            getSensorList(bedId);
+            showAlert();
+        }
+    })
+}
+
 function getGreenhoseList(){
     $('title').text('Список теплиц');
     $('#content').empty();
@@ -21,7 +55,9 @@ function getGreenhoseList(){
         var html = $('<div>').load("htmlTemplates/data.html", function(){
             html.find(".title").text(element.name);
             html.find(".content").text(element.location);
-            html.find(".card").attr("onclick", "getBedsList(" + element.id + ")");
+            html.find(".card-body").attr("onclick", "getBedsList(" + element.id + ")");
+            html.find('button').removeClass('hidden');
+            html.find('button').attr('onclick', 'deleteGreenhose(' + element.id + ')');
         });
     $("#content").append(html);
     });
@@ -36,7 +72,7 @@ function getBedsList(id){
     }, 'htmlTemplates/adding/addBed.html', createBed);
 
     getList("https://localhost:44359/bed/get/", id, function(data){
-        return [data.name, 'Кол-во воды в баке: ' + data.waterVolume + ' литров.', 'getSensorList(' + data.id + ')'];
+        return [data.name, 'Кол-во воды в баке: ' + data.waterVolume + ' литров.', 'getSensorList(' + data.id + ')', 'deleteBed(' + data.id + ',' + id + ')'];
     });
 }
 
@@ -71,7 +107,7 @@ function getSensorList(id){
         return [data.name, 'Кол-во воды в баке: ' + data.waterVolume + ' литров.'];
     }, 'htmlTemplates/adding/addSensor.html', createSensor);
     getList("https://localhost:44359/sensor/get/", id, function(data){
-        return [data.name, getType(data.type), 'getSensorDetails(' + data.id + ')'];
+        return [data.name, getType(data.type), 'getSensorDetails(' + data.id + ')', 'deleteSensor(' + data.id + ',' + id + ')'];
     });
     showAddButton();
 }
@@ -121,6 +157,13 @@ function getSensorDetails(id){
     $("#content").append(html);
 
     hideAddButton();
+}
+
+function showAlert(){
+    $('.alert').removeClass('hidden');
+    setTimeout(() => {
+        $('.alert').addClass('hidden');
+    }, 1000);
 }
 
 function getMeseasurementUnit(data){

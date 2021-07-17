@@ -47,7 +47,7 @@ function getDetails(url, id, lambda, formTemplate, onSubmit){
     });
 }
 
-function getList(url, id, lambda){
+function getList(url, id, lambda, delFunc){
     var list = getDataFromServer(url + id);
     
     list.forEach(element => {
@@ -55,7 +55,9 @@ function getList(url, id, lambda){
         var html = $('<div>').load("htmlTemplates/data.html", function(){
             html.find(".title").text(array[0]);
             html.find(".content").text(array[1]);
-            html.find(".card").attr("onclick", array[2]);
+            html.find(".card-body").attr("onclick", array[2]);
+            html.find('button').removeClass('hidden');
+            html.find('button').attr('onclick', array[3]);
         });
         $("#content").append(html);
     });
