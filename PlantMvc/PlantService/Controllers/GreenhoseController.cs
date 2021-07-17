@@ -83,7 +83,7 @@ namespace PlantService.Controllers
         {
             var model = _repository.GetById(id);
 
-            if (model != null)
+            if (model == null)
                 return NotFound();
 
             _repository.Delete(model);

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Entities.Models
 {
@@ -10,6 +11,7 @@ namespace Entities.Models
         public decimal WaterVolume { get; set; }
         [Required]
         public int GreenhoseId { get; set; }
+        [JsonIgnore]
         public virtual Greenhose Greenhose { get; set; }
         
      }
