@@ -1,4 +1,4 @@
-<form class="container-fluid">
+<form class="container-fluid" id="detailform">
     <div class="form-group">
         <label for="internalName">Название</label>
         <input type="text" class="form-control" id="internalName" aria-describedby="emailHelp">    
@@ -11,5 +11,6 @@
             <option value="TemperatureSensor">Датчик температуры</option>
         </select>
     </div>
+    <input type="hidden" value="" id="parentId">
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

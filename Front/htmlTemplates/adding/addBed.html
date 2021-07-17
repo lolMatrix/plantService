@@ -1,11 +1,12 @@
-<form class="container-fluid">
+<form class="container-fluid" id="detailform">
     <div class="form-group">
         <label for="internalName">Название</label>
-        <input type="text" class="form-control" id="internalName" aria-describedby="emailHelp">
+        <input type="text" class="form-control" id="internalName">
     </div>
     <div class="form-group">
         <label for="water">Кол-во воды в баке</label>
-        <input type="password" class="form-control" id="water">
+        <input type="number" class="form-control" id="water">
     </div>
+    <input type="hidden" value="" id="parentId">
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

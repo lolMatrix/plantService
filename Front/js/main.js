@@ -7,7 +7,7 @@ $(document).ready(function (){
 
         sendJson(greenhose, 'greenhose/create', function(){
             getGreenhoseList();
-        })
+        });
         return false;
     })
 })
@@ -33,10 +33,35 @@ function getBedsList(id){
     $("#content").empty();
     getDetails("https://localhost:44359/greenhose/", id, function(data){
        return [data.name, data.location];
-    }, 'htmlTemplates/adding/addBed.html');
+    }, 'htmlTemplates/adding/addBed.html', createBed);
+
     getList("https://localhost:44359/bed/get/", id, function(data){
         return [data.name, 'Кол-во воды в баке: ' + data.waterVolume + ' литров.', 'getSensorList(' + data.id + ')'];
     });
+}
+
+function createBed(e) {
+    var bed = new Object();
+        bed.name = $('#internalName').val();
+        bed.waterVolume = Number($('#water').val());
+        bed.greenhoseId = Number($('#parentId').val());
+
+        sendJson(bed, 'bed/register', function(){
+            getBedsList(bed.greenhoseId);
+        });
+    return false;
+}
+
+function createSensor(e) {
+    var sensor = new Object();
+        sensor.name = $('#internalName').val();
+        sensor.type = $('#type').val();
+        sensor.bedId = Number($('#parentId').val());
+
+        sendJson(sensor, 'sensor/register', function(){
+            getSensorList(sensor.bedId);
+        });
+    return false;
 }
 
 function getSensorList(id){
@@ -44,7 +69,7 @@ function getSensorList(id){
     getDetails("https://localhost:44359/bed/", id, function (data){
         enableNavigation('getBedsList', data.greenhoseId);
         return [data.name, 'Кол-во воды в баке: ' + data.waterVolume + ' литров.'];
-    }, 'htmlTemplates/adding/addSensor.html');
+    }, 'htmlTemplates/adding/addSensor.html', createSensor);
     getList("https://localhost:44359/sensor/get/", id, function(data){
         return [data.name, getType(data.type), 'getSensorDetails(' + data.id + ')'];
     });

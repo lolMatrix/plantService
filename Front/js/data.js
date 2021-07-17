@@ -31,7 +31,7 @@ function getType(type){
     return type;
 }
 
-function getDetails(url, id, lambda, formTemplate){
+function getDetails(url, id, lambda, formTemplate, onSubmit){
     var details = getDataFromServer(url + id);
 
     var html = $('<div>').load("htmlTemplates/details.html", function (){
@@ -40,7 +40,10 @@ function getDetails(url, id, lambda, formTemplate){
         html.find('#title').text(array[0]);
         html.find('#location').text(array[1]);
         $('#content').prepend(html);
-        $('#dropdownForm').load(formTemplate);
+        $('#dropdownForm').load(formTemplate, function(){
+            $('#parentId').val(details.id);
+            $('#detailform').submit(onSubmit);
+        });
     });
 }
 
