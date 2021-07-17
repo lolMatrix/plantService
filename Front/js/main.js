@@ -12,6 +12,7 @@ $(document).ready(function (){
     })
 })
 function getGreenhoseList(){
+    $('title').text('Список теплиц');
     $('#content').empty();
     disableNavigation();
     setHiddenAddButtonOnHeader(false);
@@ -32,10 +33,10 @@ function getBedsList(id){
     $("#content").empty();
     getDetails("https://localhost:44359/greenhose/", id, function(data){
        return [data.name, data.location];
-    });
+    }, 'htmlTemplates/adding/addBed.html');
     getList("https://localhost:44359/bed/get/", id, function(data){
         return [data.name, 'Кол-во воды в баке: ' + data.waterVolume + ' литров.', 'getSensorList(' + data.id + ')'];
-    })
+    });
 }
 
 function getSensorList(id){
@@ -43,7 +44,7 @@ function getSensorList(id){
     getDetails("https://localhost:44359/bed/", id, function (data){
         enableNavigation('getBedsList', data.greenhoseId);
         return [data.name, 'Кол-во воды в баке: ' + data.waterVolume + ' литров.'];
-    });
+    }, 'htmlTemplates/adding/addSensor.html');
     getList("https://localhost:44359/sensor/get/", id, function(data){
         return [data.name, getType(data.type), 'getSensorDetails(' + data.id + ')'];
     });
