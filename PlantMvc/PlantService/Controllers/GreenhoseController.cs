@@ -20,18 +20,38 @@ namespace PlantService.Controllers
             _repository = repository;
         }
 
+        /// <summary>
+        /// Возврщает все записи теплиц
+        /// </summary>
+        /// <response code="200">Возращает массив записей Теплиц</response>
         [HttpGet]
         public IActionResult Get()
         {
             return new JsonResult(_repository.GetAll());
         }
 
+        /// <summary>
+        /// Находит теплицу по id
+        /// </summary>
+        /// <param name="id">id теплицы</param>
+        /// <response code="200">Возращает запись Теплицы</response>
+        /// <response code="404">Если теплица не найдена</response>
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return new JsonResult(_repository.GetById(id));
+            var model = _repository.GetById(id);
+
+            if (model != null)
+                return new JsonResult(model);
+
+            return NotFound();
         }
 
+        /// <summary>
+        /// Создает запись о теплице
+        /// </summary>
+        /// <param name="greenhose">Запись, которую необходимо создать</param>
+        /// <response code="200">Возращает созданную запись Теплицы</response>
         [HttpPost("create")]
         public IActionResult Post([FromBody] Greenhose greenhose)
         {
@@ -39,6 +59,11 @@ namespace PlantService.Controllers
             return new JsonResult(greenhose);
         }
 
+        /// <summary>
+        /// Редактирует запись о теплице
+        /// </summary>
+        /// <param name="greenhose">Запись</param>
+        /// <response code="200">Возращает обновленную запись Теплицы</response>
         [HttpPut("update")]
         public IActionResult Update([FromBody] Greenhose greenhose)
         {
@@ -47,11 +72,22 @@ namespace PlantService.Controllers
             return new JsonResult(greenhose);
         }
 
+        /// <summary>
+        /// Удаляет теплицу, если такая найдена
+        /// </summary>
+        /// <param name="id">id теплицы</param>
+        /// <response code="200">Если теплица удалена</response>
+        /// <response code="404">Если теплица не найдена</response>
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
-            _repository.Delete(_repository.GetById(id));
+            var model = _repository.GetById(id);
+
+            if (model == null)
+                return NotFound();
+
+            _repository.Delete(model);
             return Ok();
-        } 
+        }
     }
 }
